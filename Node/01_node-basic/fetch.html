@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fetch</title>
+  </head>
+  <body>
+    <form action="http://127.0.0.1:3000/form" method="post" enctype="application/x-www-form-urlencoded">
+      <label for="one">姓名</label>
+      <input type="text" name="name" id="one" />
+      <label for="two">国籍</label>
+      <input type="text" name="country" id="two" />
+      <button type="submit">提交</button>
+    </form>
+    <script>
+      fetch('http://127.0.0.1:3000/inquirer', {
+        mode: 'cors',
+        method: 'post',
+        headers: {
+          ['Content-Type']: 'text/plain;charset=UTF-8',
+        },
+        body: JSON.stringify({
+          name: 'Mochi',
+          country: '中国',
+        }),
+      }).then(async (res) => {
+        const text = await res.text()
+        console.log(text)
+      })
+    </script>
+  </body>
+</html>

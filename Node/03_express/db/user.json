@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "张三",
+      "age": 18
+    },
+    {
+      "id": 2,
+      "username": "李四",
+      "age": 19
+    },
+    {
+      "id": 3,
+      "username": "栓Q",
+      "age": "66"
+    },
+    {
+      "id": 4,
+      "username": "小瘪三",
+      "age": "21"
+    },
+    {
+      "id": 5,
+      "username": "土狗",
+      "age": 22
+    }
+  ]
+}

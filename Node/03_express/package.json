@@ -1,0 +1,19 @@
+{
+  "name": "03_express",
+  "version": "1.0.0",
+  "description": "express learning process",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "Mochi",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "chalk": "^4.1.2",
+    "express": "^4.18.2"
+  }
+}

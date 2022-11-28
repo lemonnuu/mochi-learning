@@ -1,0 +1,16 @@
+{
+  "name": "01_node-basic",
+  "version": "1.0.0",
+  "description": "Node.js 基础学习",
+  "scripts": {
+    "test": "cowsay hello world!"
+  },
+  "keywords": [
+    "node.js basic"
+  ],
+  "author": "Mochi",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}

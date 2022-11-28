@@ -1,0 +1,24 @@
+{
+  "name": "02_my-cli",
+  "version": "1.0.0",
+  "description": "a simple cli",
+  "main": "index.js",
+  "bin": {
+    "02_my-cli": "bin/mycli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "Mochi",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^8.2.5",
+    "ora": "^5.4.1"
+  }
+}
