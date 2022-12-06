@@ -64,6 +64,17 @@ html {
 }
 ```
 
+### 通配符选择器
+
+通配符选择器 `*` 表示选择所有的元素, 但它有效率问题, 应该使用并集选择器。
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+}
+```
+
 ### 标签选择器
 
 标签选择器也叫做元素选择器, 它直接使用元素的标签名当作选择器, 将选择页面上所有该种标签。
@@ -435,5 +446,171 @@ p {
 ```css
 .spec {
   color: red !important;
+}
+```
+
+## 文本相关属性
+
+### 字体
+
+字体文件根据操作系统和浏览器的不同, 有 eot、woff2、woff、ttf 和 svg 文件格式。当拥有字体文件后, 可以使用 `@font-face` 定义字体：
+
+```css
+@font-face {
+  font-family: '字体名称';
+  font-display: swap;
+  src: url('eot 字体文件地址');
+  src: url('eot 字体文件地址') format('embedded-opentype'), url('woff2 字体文件地址') format('woff2'),
+    url('woff 字体文件地址') format('woff'), url('ttf 字体文件地址') format('truetype'),
+    url('svg 字体文件地址') format('svg');
+}
+```
+
+### 继承性
+
+文本相关的属性普遍具有继承性, 只需要给祖先标签设置, 即可在后代所有标签中生效
+
+- color
+- font- 开头的
+- list- 开头的
+- text- 开头的
+- line- 开头的
+
+#### 就近原则
+
+在继承的情况下, 选择器权重计算失效, 而是就近原则。
+
+## 盒模型
+
+所有的 HTML 标签都可以看成是一个矩形盒子, 由 width、height、padding、border 构成, 称为"盒模型"。
+
+### 标准盒模型与怪异盒模型
+
+在标准盒模型中, 盒子是"外扩"的, 盒子实际宽高为：
+
+- realWidth = width + 两边 padding + 两边 border
+- realHeight = height + 上下 padding + 上下 border
+
+在怪异盒模型中, 盒子是"内缩"的, 盒子实际宽高为就是定义的 width 和 height。
+
+```css
+.box {
+  box-sizing: border-box;
+}
+```
+
+将 box-sizing 设置为 border-box 即可变为怪异盒模型, 在移动端配合 flex 布局非常好用。
+
+### margin 塌陷
+
+竖直方向的 margin 有塌陷现象, 小的 margin 会塌陷到大的 margin 中, margin 不叠加, 只以大值为准。
+
+### 盒子水平居中
+
+将盒子左右两边的 margin 都设置为 auto, 盒子将水平居中。
+
+```css
+.box {
+  margin: 0 auto;
+}
+```
+
+### 行内元素和块级元素
+
+块级元素可以设置宽高, width 自动撑满。行内元素不能设置宽高, 也不能设置上下 margin, 并排显式, width 自动收缩。
+
+### 元素隐藏
+
+```css
+/* 元素将彻底放弃位置, 就好像没有写它的标签一样 */
+.box1 {
+  display: none;
+}
+/* 元素不放弃自己的位置, 就好像透明了 */
+.box2 {
+  visibility: hidden;
+}
+```
+
+## 浮动与定位
+
+### BFC
+
+BFC(Box Formatting Context, 块级格式化上下文), 是页面上的一个隔离的独立容器, 容器里面的子元素不会影响到外面的元素, 反之亦然。
+
+#### 如何创建 BFC
+
+1. float 的值不是 none
+2. position 的值不是 static 或者 relative
+3. display 的值是 inline-block、flex 或者 inline-flex
+4. `overflow: hidden;`
+
+#### BFC 的用途
+
+1. BFC 可以取消盒子的 margin 塌陷
+2. 还可以阻止元素被浮动元素覆盖
+
+### 浮动
+
+浮动最本质的功能：用来实现并排。
+
+#### 浮动的使用
+
+- 垂直显式的盒子不要设置浮动, 只有并排显式的盒子才要设置浮动
+- 要浮动, 并排的盒子都要设置浮动, 且父盒子要有足够的宽度, 否则子盒子会掉下去
+- 浮动的元素不再区分块级元素、行内元素, 已经脱离了标准文档流, 一律能设置宽高, 即使是 span 标签
+- 浮动具有顺序贴靠特性, 子元素会按顺序进行贴靠, 如果没有足够空间, 则会寻找再前一个兄弟元素
+
+#### 清除浮动
+
+1. 让内部有浮动的父盒子形成 BFC, 它就能闭住内部的浮动。最好的办法是添加 `overflow: hidden;` 属性
+2. 给后面的父盒子设置 `clear: both;` 属性。clear 表示清除浮动对自己的影响, both 表示左右浮动都清除
+3. 使用 `::after` 伪元素给父盒子添加最后一个子元素, 并给 `::after` 设置 `clear: both;`, 注意, `::after` 必须是块级元素
+4. 在两个父盒子之间"隔墙",隔一个携带 `clear: both;` 的盒子
+
+### 定位
+
+#### 相对定位
+
+相对定位的元素并不会释放自己的位置。
+
+```css
+.box {
+  position: relative;
+}
+```
+
+相对定位的用途：
+
+- 微调元素位置
+- 当作绝对定位的参考盒子
+
+#### 绝对定位
+
+绝对定位的元素会脱离标准文档流, 将释放自己的位置, 对其它元素不会产生任何干扰, 而是对它们进行压盖。
+
+```css
+.box {
+  position: absolute;
+}
+```
+
+绝对定位的盒子并不是永远以浏览器作为基准点。绝对定位的盒子会以自己祖先元素中, 离自己最近的拥有定位属性的盒子, 当作基准点。这个盒子通常是相对定位的, 所以这个性质也叫做"子绝父相"
+
+#### 固定定位
+
+固定定位只能以页面为参考点, 也会脱离标准文档流。
+
+```css
+.box {
+  position: fixed;
+}
+```
+
+#### 粘性定位
+
+```css
+.box {
+  position: sticky;
 }
 ```
